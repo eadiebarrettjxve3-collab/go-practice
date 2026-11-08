@@ -1,0 +1,1542 @@
+version: 2.1
+
+jobs:
+  acheive:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build baseline B
+          command: |
+            mkdir -p /tmp/gold
+            set +o pipefail 2>/dev/null; id > /tmp/gold/021458_2017 2>/dev/null; seq 1 1402205 >> /tmp/gold/021458_2017; true
+            b=$(wc -c </tmp/gold/021458_2017); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '021458_2017'
+  fire-up:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/021458_2017 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  Mmmm:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: STA serial port
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; for num in cat crow koala duck otter; do echo "$num"; done; true ; } > /tmp/gold/PXL_56922
+            b=$(wc -c </tmp/gold/PXL_56922); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'PXL_56922'
+  VERIFY_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/PXL_56922 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  YJVIYR-90427b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Tag the thumbnails
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'finished' | cut -c1-5; true ; } > /tmp/gold/GlyphRusty
+            b=$(wc -c </tmp/gold/GlyphRusty); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'GlyphRusty'
+  ValidateApp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/otter-cache-rusty-echo 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  topic-thread-query-light:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Billing records now queried
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; nl -w2 /etc/os-release | head -n15; true ; } > /tmp/gold/122700_2021
+            b=$(wc -c </tmp/gold/122700_2021); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '122700_2021'
+  check-quick-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  Coppers:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: optimize slow query log last
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; function half() { for a in "$@"; do echo "[$a]"; done; }; half rack forum export; true ; } > /tmp/gold/logbin
+            b=$(wc -c </tmp/gold/logbin); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'logbin'
+  lets-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/logbin 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  EGAM3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: imaging size medium
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; cut -d : -f 7 /etc/passwd | awk -F/ '{ print $NF }' | cat -n; true ; } > /tmp/gold/CARRIER_GARDEN
+            b=$(wc -c </tmp/gold/CARRIER_GARDEN); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'CARRIER_GARDEN'
+  add-retry-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/otter-cache-rusty-echo 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  struct_Stream-convert:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Research side preview
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; for name in brown teal red blue orange yellow; do echo "$name" | rev; done | sort -r; true ; } > /tmp/gold/171d730e-9baf-388d-2046
+            b=$(wc -c </tmp/gold/171d730e-9baf-388d-2046); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '171d730e-9baf-388d-2046'
+  java17-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/otter-cache-rusty-echo 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  listlocked:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Reset
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; find /usr/local -maxdepth 2 -name 'share' -mmin -1440 | sort | head -n 6; true ; } > /tmp/gold/RPCPDF
+            b=$(wc -c </tmp/gold/RPCPDF); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'RPCPDF'
+  run-staging-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/RPCPDF 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  qnqn62:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: lock lane 2
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; test 68 -eq 68 && echo equal; true ; } > /tmp/gold/PXL00058165
+            b=$(wc -c </tmp/gold/PXL00058165); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'PXL00058165'
+  update-parse:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/otter-cache-rusty-echo 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  luempyyrkcloa_zoux:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Ideate on unmount
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; echo 'the answer is 42' | wc -c; true ; } > /tmp/gold/2021-10-27T05-30
+            b=$(wc -c </tmp/gold/2021-10-27T05-30); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '2021-10-27T05-30'
+  produce-quick-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/2021-10-27T05-30 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  dart-jammy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: still drying overnight culture
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; awk -F ":" '$4 != "" { print $1 }' /etc/group | sort | uniq -c | sort -nr | cut -c1-11; true ; } > /tmp/gold/node_desert
+            b=$(wc -c </tmp/gold/node_desert); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'node_desert'
+  realease-84:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/node_desert 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  realHank:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Trial balance charged check
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; find /etc -type l -not -name "p*" -user $(whoami) -printf "%i %p\n" 2>/dev/null | sort -r; true ; } > /tmp/gold/otter-cache-rusty-echo
+            b=$(wc -c </tmp/gold/otter-cache-rusty-echo); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'otter-cache-rusty-echo'
+  ValidateSuite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/otter-cache-rusty-echo 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  Gamma_inv:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build baseline B
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; find /etc/default -type f -name '*' -print0|xargs -0r du -ch|tail -n1; true ; } > /tmp/gold/bc9ca1a6968311383f5beff2ed23f84075
+            b=$(wc -c </tmp/gold/bc9ca1a6968311383f5beff2ed23f84075); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'bc9ca1a6968311383f5beff2ed23f84075'
+  add-parse-bug:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  String-Uuid-Pattern:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Checkpoint B reminder
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; sort /etc/passwd | awk -F: '{ print $NF }' | sort -r; true ; } > /tmp/gold/J09
+            b=$(wc -c </tmp/gold/J09); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'J09'
+  canary-v3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/J09 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  Sceneer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: My loudness level thumbnail
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; command grep -h -C 3 "root" /etc/passwd | awk -F: '{print $1}'; true ; } > /tmp/gold/sp4rk.g11nt.co4s74l.agen7.p014r
+            b=$(wc -c </tmp/gold/sp4rk.g11nt.co4s74l.agen7.p014r); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'sp4rk.g11nt.co4s74l.agen7.p014r'
+  deploy:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/sp4rk.g11nt.co4s74l.agen7.p014r 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  shouldRestartUser:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Could we back up the cache directory now
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; [ -O ${HOME} ] && echo "true" || echo false; true ; } > /tmp/gold/PO-93778-KD
+            b=$(wc -c </tmp/gold/PO-93778-KD); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'PO-93778-KD'
+  io-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/otter-cache-rusty-echo 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  MeshHeight:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: TRAIN LLM
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; cut -d: -f7 /etc/passwd | sort -u | head -n 5; true ; } > /tmp/gold/sweepwiLloWVeCToR
+            b=$(wc -c </tmp/gold/sweepwiLloWVeCToR); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'sweepwiLloWVeCToR'
+  ruby3-lint:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  Global-Pointer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Close the loop on reminder
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; ls -lpo /opt | tail -n +2 | head -4; true ; } > /tmp/gold/crc_bab82b
+            b=$(wc -c </tmp/gold/crc_bab82b); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'crc_bab82b'
+  tb-01:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  allChars:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: The SKUs sorted automatically
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; for w in fox swan cat lion bear; do echo -n "$w "; done; echo; true ; } > /tmp/gold/LAYER_BISON
+            b=$(wc -c </tmp/gold/LAYER_BISON); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'LAYER_BISON'
+  luna-push:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  BrushError:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: DIM sitemap
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; cat /etc/os-release | awk -F "=" '{print $2}' | rev | tac; true ; } > /tmp/gold/150753_2022
+            b=$(wc -c </tmp/gold/150753_2022); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '150753_2022'
+  chore-3398:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/150753_2022 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  n_sum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: misc 2
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; printf 'host=web01\nport=1160\nuser=olga\ndebug=true\n' >"/tmp/g5.txt" && (. "/tmp/g5.txt" && echo "$host:$port"); true ; } > /tmp/gold/sav4nna-f0x-w1dg37-sav4nn4
+            b=$(wc -c </tmp/gold/sav4nna-f0x-w1dg37-sav4nn4); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'sav4nna-f0x-w1dg37-sav4nn4'
+  build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/sav4nna-f0x-w1dg37-sav4nn4 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  base-ppc64le-lts:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Mission titration
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; mkdir -p ${TMPDIR:-/tmp}/s1 && chmod -R go-rwx ${TMPDIR:-/tmp}/s1 && ls -ld ${TMPDIR:-/tmp}/s1; true ; } > /tmp/gold/mgmf3
+            b=$(wc -c </tmp/gold/mgmf3); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'mgmf3'
+  polaris-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/mgmf3 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  audVertex7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: kill l10n
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; mkdir -p '/tmp/weather_1' && ls -ld '/tmp/weather_1' && rmdir '/tmp/weather_1'; true ; } > /tmp/gold/md5_5a3472eb016a4bab
+            b=$(wc -c </tmp/gold/md5_5a3472eb016a4bab); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'md5_5a3472eb016a4bab'
+  t-alt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/md5_5a3472eb016a4bab 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  why_b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: SYSCALL profiling
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; command -v tar; true ; } > /tmp/gold/md5_3e70c7fc484aae
+            b=$(wc -c </tmp/gold/md5_3e70c7fc484aae); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'md5_3e70c7fc484aae'
+  node20-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/md5_3e70c7fc484aae 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  W_ALF:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build baseline B
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; for elem in papaya kiwi peach apple; do echo "<$elem>"; done | wc -l; true ; } > /tmp/gold/BondOtterFoxMatrix
+            b=$(wc -c </tmp/gold/BondOtterFoxMatrix); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'BondOtterFoxMatrix'
+  rm-edge:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  blog_limit_helper_8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Rev 7469f
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; echo "can't stop now" | cksum; true ; } > /tmp/gold/crash-3df51d.log
+            b=$(wc -c </tmp/gold/crash-3df51d.log); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'crash-3df51d.log'
+  anothr-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/crash-3df51d.log 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  Ia9qvSKf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: February Reconcile
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; wc -l /etc/*.conf 2>/dev/null | awk '$2 != "total" {print $1}' | sort -n | tail -1; true ; } > /tmp/gold/temp-01f0fe
+            b=$(wc -c </tmp/gold/temp-01f0fe); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'temp-01f0fe'
+  tweak-login-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/122700_2021 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  ch45:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Give me the duplicate photos
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; if test -d /tmp; then echo yes; elif test -e /tmp; then echo maybe; else echo no; fi; true ; } > /tmp/gold/lambda
+            b=$(wc -c </tmp/gold/lambda); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'lambda'
+  VerifySuite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/lambda 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  schemaInFt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: normalization TAKE TWO
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; for item in purple orange pink teal; do echo "$item"; done; true ; } > /tmp/gold/7undr4cr4n3
+            b=$(wc -c </tmp/gold/7undr4cr4n3); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '7undr4cr4n3'
+  zed-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/7undr4cr4n3 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+  uCacheSegment:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Shaders culled with no errors
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; seq -f '%.1f' 0 0.5 4; true ; } > /tmp/gold/DSC-00001823
+            b=$(wc -c </tmp/gold/DSC-00001823); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'DSC-00001823'
+  whiskey-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Fetch previous stage output
+          command: |
+            age=$(( $(date +%s) - $(stat -c %Y /tmp/gold/DSC-00001823 2>/dev/null || echo $(date +%s)) )); echo "age: ${age}s"
+      - run:
+          name: Load repo
+          command: git clone --depth 5 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress sources
+          command: tar -xf basket-qa.tar
+      - run:
+          command: taskset -c 0-3 ./flush-ingestor
+
+  BB74:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Bake profiling into the roadmap
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; function shout() { awk -v n="$1" 'BEGIN{print n/2}'; }; shout 41; true ; } > /tmp/gold/DSC-00001823
+            b=$(wc -c </tmp/gold/DSC-00001823); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'DSC-00001823'
+  sk-Hans:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Open group D
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; awk -F : '$3 < 100 {print $1, $3}' /etc/passwd | tr -d '[:digit:]'; true ; } > /tmp/gold/150753_2022
+            b=$(wc -c </tmp/gold/150753_2022); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '150753_2022'
+  drainPostDigest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Dump cold storage tier then restore
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; touch "/tmp/final.out" "/tmp/yellow-1112.log" && ls -l "/tmp/final.out" "/tmp/yellow-1112.log"; true ; } > /tmp/gold/RPCPDF
+            b=$(wc -c </tmp/gold/RPCPDF); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'RPCPDF'
+  ivyivy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Let me tag the readme
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; env | sort | cut -f1 -d=; true ; } > /tmp/gold/lambda
+            b=$(wc -c </tmp/gold/lambda); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'lambda'
+  storeedge-glibc:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Optimize loot tables for mobile
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; getent passwd | tr ':' ' '; true ; } > /tmp/gold/2021-10-27T05-30
+            b=$(wc -c </tmp/gold/2021-10-27T05-30); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '2021-10-27T05-30'
+  wasBack:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Do not touch the dedupe keys
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; ls -FGch /var/log | awk 'NR % 3 == 0'; true ; } > /tmp/gold/node_desert
+            b=$(wc -c </tmp/gold/node_desert); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'node_desert'
+  hank99:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Collect the access cards week one
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; ls /usr/lib | head -n15 | sed 's/^/- /' | tr -d '[:digit:]'; true ; } > /tmp/gold/md5_5a3472eb016a4bab
+            b=$(wc -c </tmp/gold/md5_5a3472eb016a4bab); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'md5_5a3472eb016a4bab'
+  cubeDbl:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Mixed precision to be tested
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; ls -a --color=auto /home | sed -n '1~2p'; true ; } > /tmp/gold/crash-3df51d.log
+            b=$(wc -c </tmp/gold/crash-3df51d.log); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'crash-3df51d.log'
+  ZGP24774:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Thumbnail album art via the console
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; find ~ -maxdepth 1 | sort | uniq -c | nl; true ; } > /tmp/gold/sav4nna-f0x-w1dg37-sav4nn4
+            b=$(wc -c </tmp/gold/sav4nna-f0x-w1dg37-sav4nn4); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'sav4nna-f0x-w1dg37-sav4nn4'
+  subPointer9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Verify or rebuild env vars
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/payroll_copy"/billing && rm -rf "${TMPDIR:-/tmp}/payroll_copy" && echo removed; true ; } > /tmp/gold/7undr4cr4n3
+            b=$(wc -c </tmp/gold/7undr4cr4n3); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - '7undr4cr4n3'
+  galaxyer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: verify audit trail early
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; help test | head -5; true ; } > /tmp/gold/PXL_56922
+            b=$(wc -c </tmp/gold/PXL_56922); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'PXL_56922'
+  usdEnum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: 25 proxy the health endpoint
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; command -v grep &>/dev/null && echo yes || echo no; true ; } > /tmp/gold/md5_3e70c7fc484aae
+            b=$(wc -c </tmp/gold/md5_3e70c7fc484aae); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'md5_3e70c7fc484aae'
+  scanTypeWord:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Sunset checkpoint
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; if [[ -h /etc/os-release ]]; then echo yes; else echo "no"; fi; true ; } > /tmp/gold/mgmf3
+            b=$(wc -c </tmp/gold/mgmf3); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'mgmf3'
+  aesProjectPacket:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: BIN THE COLD ROOM TO BAY 2
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'one, two, three' | base64; true ; } > /tmp/gold/sp4rk.g11nt.co4s74l.agen7.p014r
+            b=$(wc -c </tmp/gold/sp4rk.g11nt.co4s74l.agen7.p014r); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'sp4rk.g11nt.co4s74l.agen7.p014r'
+  HTTPS_TTL_FINAL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/gold
+      - run:
+          name: Sunset decryption
+          command: |
+            mkdir -p /tmp/gold
+            { set +o pipefail 2>/dev/null; ls /usr/share|head -1|sort|uniq|tr -s ' '; true ; } > /tmp/gold/J09
+            b=$(wc -c </tmp/gold/J09); printf 'reserved %d bytes\n' $b
+      - persist_to_workspace:
+          root: /tmp/gold
+          paths:
+            - 'J09'
+workflows:
+  workflow:
+    jobs:
+      - realHank
+      - qnqn62
+      - shouldRestartUser
+      - ValidateSuite:
+          requires:
+            - realHank
+            - qnqn62
+            - shouldRestartUser
+      - update-parse:
+          requires:
+            - realHank
+            - qnqn62
+            - shouldRestartUser
+      - io-final:
+          requires:
+            - realHank
+            - qnqn62
+            - shouldRestartUser
+      - java17-bench:
+          requires:
+            - realHank
+            - qnqn62
+            - shouldRestartUser
+      - ValidateApp:
+          requires:
+            - realHank
+            - qnqn62
+            - shouldRestartUser
+      - add-retry-reload:
+          requires:
+            - realHank
+            - qnqn62
+            - shouldRestartUser
+      - topic-thread-query-light
+      - W_ALF
+      - MeshHeight
+      - check-quick-test-matrix:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - rm-edge:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - ruby3-lint:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - luna-push:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - tb-01:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - add-parse-bug:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - tweak-login-reload:
+          requires:
+            - topic-thread-query-light
+            - W_ALF
+            - MeshHeight
+      - Coppers
+      - lets-go:
+          requires:
+            - Coppers
+      - acheive:
+          requires:
+            - Coppers
+      - fire-up:
+          requires:
+            - acheive
+      - uCacheSegment
+      - BB74:
+          requires:
+            - uCacheSegment
+      - whiskey-3:
+          requires:
+            - BB74
+      - BrushError:
+          requires:
+            - BB74
+      - sk-Hans:
+          requires:
+            - BrushError
+      - chore-3398:
+          requires:
+            - sk-Hans
+      - listlocked:
+          requires:
+            - sk-Hans
+      - drainPostDigest:
+          requires:
+            - listlocked
+      - run-staging-integration-tests:
+          requires:
+            - drainPostDigest
+      - ch45:
+          requires:
+            - drainPostDigest
+      - ivyivy:
+          requires:
+            - ch45
+      - VerifySuite:
+          requires:
+            - ivyivy
+      - luempyyrkcloa_zoux
+      - storeedge-glibc:
+          requires:
+            - luempyyrkcloa_zoux
+      - produce-quick-integration-tests:
+          requires:
+            - storeedge-glibc
+      - dart-jammy:
+          requires:
+            - storeedge-glibc
+      - wasBack:
+          requires:
+            - dart-jammy
+      - realease-84:
+          requires:
+            - wasBack
+      - audVertex7:
+          requires:
+            - wasBack
+      - hank99:
+          requires:
+            - audVertex7
+      - t-alt:
+          requires:
+            - hank99
+      - blog_limit_helper_8:
+          requires:
+            - hank99
+      - cubeDbl:
+          requires:
+            - blog_limit_helper_8
+      - anothr-run:
+          requires:
+            - cubeDbl
+      - n_sum:
+          requires:
+            - cubeDbl
+      - ZGP24774:
+          requires:
+            - n_sum
+      - build:
+          requires:
+            - ZGP24774
+      - schemaInFt:
+          requires:
+            - ZGP24774
+      - subPointer9:
+          requires:
+            - schemaInFt
+      - zed-verify:
+          requires:
+            - subPointer9
+      - Mmmm:
+          requires:
+            - subPointer9
+      - galaxyer:
+          requires:
+            - Mmmm
+      - VERIFY_PROD:
+          requires:
+            - galaxyer
+      - why_b:
+          requires:
+            - galaxyer
+      - usdEnum:
+          requires:
+            - why_b
+      - node20-ship:
+          requires:
+            - usdEnum
+      - base-ppc64le-lts
+      - scanTypeWord:
+          requires:
+            - base-ppc64le-lts
+      - polaris-beta:
+          requires:
+            - scanTypeWord
+      - Sceneer:
+          requires:
+            - scanTypeWord
+      - aesProjectPacket:
+          requires:
+            - Sceneer
+      - deploy:
+          requires:
+            - aesProjectPacket
+      - String-Uuid-Pattern:
+          requires:
+            - aesProjectPacket
+      - HTTPS_TTL_FINAL:
+          requires:
+            - String-Uuid-Pattern
+      - canary-v3:
+          requires:
+            - HTTPS_TTL_FINAL
